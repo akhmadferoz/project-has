@@ -23,7 +23,7 @@ To start the game, each player will roll a dice and the player with the highest 
 
 Once a round is started, each player will roll two die. Their result will be displayed on screen and their sum of which will be added to their respective positions on the board. All players including the computer will be represented by a special character on the board:
     
-    [‘!’, ‘@’, ‘#’, ‘$’, ‘%’, ‘^’]
+    ['!', '@', '#', '$', '%', '^']
 
 On every player’s turn, the screen will be cleared, and the board with the updated with their new location. 
 ------------------------------------------------------------------------------------------------------
