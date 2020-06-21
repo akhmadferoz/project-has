@@ -36,12 +36,12 @@ def game(size=10):
     pygame.display.set_caption("Snakes & Ladders - Space Eddition")
     background = pygame.image.load("space-background.png")
     #----------Loading the images of the players-----------#
-    player1 = pygame.image.load('ship1.png')
-    player2 = pygame.image.load('ship2.png')
-    player3 = pygame.image.load('ship3.png')
-    player4 = pygame.image.load('ship4.png')
-    player5 = pygame.image.load('ship5.png')
-    player6 = pygame.image.load('ship6.png')
+    ship1 = pygame.image.load('ship1.png')
+    ship2 = pygame.image.load('ship2.png')
+    ship3 = pygame.image.load('ship3.png')
+    ship4 = pygame.image.load('ship4.png')
+    ship5 = pygame.image.load('ship5.png')
+    ship6 = pygame.image.load('ship6.png')
 
         
     def ship_music():
@@ -85,7 +85,7 @@ def game(size=10):
     for i in range(1,101): numbers.append(i)
 
     #--------Loading the snakes and ladder images-----------#
-    snakeImg = pygame.image.load('portal10.png')
+    snakeImg = pygame.image.load('snekPortal10.png')
     ladderImg = pygame.image.load('portal10.png')
 
                 #------------Go from Key to Value----------------#
@@ -176,16 +176,7 @@ def game(size=10):
     #-----------This funcation draws the roll button-------------------#
     charterPath = pygame.image.load('rollButton.png')
     def roll_button():
-        # pygame.draw.rect(screen,(0,0,0),(roll_x,roll_y,100,100))
-        # font = pygame.font.Font('freesansbold.ttf', 32)
-        # text = font.render("ROLL", False,(255, 255, 255) )
-        # textRect = text.get_rect()
-        # textRect.center = (roll_x+50, roll_y+50) 
-        # screen.blit(text, textRect) 
         screen.blit(charterPath, (roll_x, roll_y))
-
-    def show_hand():
-        screen.blit(handImg, (roll_x, roll_y-50))
 
     #------------This function decides which picture is to be loaded when a dice is rolled---------------#
     def which_dice(num): 
@@ -205,8 +196,13 @@ def game(size=10):
         return img1, dice1
 
     #----------This function displays the player--------------#
-    def p1(x,y): screen.blit(player1,(x,y))
-    def p2(x,y): screen.blit(player2,(x,y))
+    def p1(x,y):screen.blit(ship1,(x,y))
+    def p2(x,y):screen.blit(ship2,(x,y))
+    def p3(x,y):screen.blit(ship3,(x,y))
+    def p4(x,y):screen.blit(ship4,(x,y))
+    def p5(x,y):screen.blit(ship5,(x,y))
+    def p6(x,y):screen.blit(ship6,(x,y))
+
 
     #----------------This function tells if the player is in a snake location---------#
     def snaked(location):
@@ -297,6 +293,9 @@ def game(size=10):
             a,b=100,b-60
 
 
+    def whose_turn(x):
+        screen.blit(x, (750,300))
+
     #-----Initially the dice is zero---------#
     dice = 0
 
@@ -350,17 +349,28 @@ def game(size=10):
                 players[current_player] = (XX,YY) #-----Update Location-------#
                 moving=False
 
-
-        bman_x = players["ship1"][0]  #----updated X-cordinate of Batman--------#
-        bman_y = players["ship1"][1] #----updated Y-cordinate of Batman--------#
-        sman_x = players["ship2"][0] #----updated X-cordinate of Superman--------#
-        sman_y = players["ship2"][1] #----updated Y-cordinate of Superman--------#
+        ship1_x = players["ship1"][0]  #----updated X-cordinate of Batman--------#
+        ship1_y = players["ship1"][1] #----updated Y-cordinate of Batman--------#
+        ship2_x = players["ship2"][0] #----updated X-cordinate of Superman--------#
+        ship2_y = players["ship2"][1] #----updated Y-cordinate of Superman--------#
+        ship3_x = players["ship3"][0] #----updated X-cordinate of Superman--------#
+        ship3_y = players["ship3"][1] #----updated Y-cordinate of Superman--------#
+        ship4_x = players["ship4"][0] #----updated X-cordinate of Superman--------#
+        ship4_y = players["ship4"][1] #----updated Y-cordinate of Superman--------#
+        ship5_x = players["ship5"][0] #----updated X-cordinate of Superman--------#
+        ship5_y = players["ship5"][1] #----updated Y-cordinate of Superman--------#
+        ship6_x = players["ship6"][0] #----updated X-cordinate of Superman--------#
+        ship6_y = players["ship6"][1] #----updated Y-cordinate of Superman-----
 
         roll_button()  #------Display the roll button-------#
         square()
         getBoard()    #--------Display the Board---------#
-        p1(bman_x,bman_y)  #-------Display the player------#
-        p2(sman_x,sman_y)  #-------Display the player-----#
+        p1(ship1_x,ship1_y)  #-------Display the player------#
+        p2(ship2_x,ship2_y)  #-------Display the player-----#
+        p3(ship3_x,ship4_y)  #-------Display the player------#
+        p4(ship4_x,ship4_y)  #-------Display the player-----#
+        p5(ship5_x,ship5_y)  #-------Display the player------#
+        p6(ship6_x,ship6_y)  #-------Display the player-----#
         show_ladders() #------Show all the ladders-------#
         show_snakes()  #--------Show all the snakes--------#
         pygame.display.update() #------Keep updating the display--------#
