@@ -50,6 +50,11 @@ def game(size=10):
         mixer.music.play()
         mixer.music.set_volume(0.7)
 
+
+    def is_empty(lst): return len(lst)==0
+    def enQueue(lst,data): return lst.append(data)
+    def front(lst): return lst[0]
+    def deQueue(lst): return lst.pop(0)
     #----------Loading all the possible dice roll images------------#
     one = pygame.image.load('dice1.png')
     two = pygame.image.load('dice2.png')
@@ -58,28 +63,22 @@ def game(size=10):
     five = pygame.image.load('dice5.png')
     six = pygame.image.load('dice6.png')
 
-    snake_txt = [
-    "A python bit you..",
-    "Oops, you were bitten by a  deadly snake", "Dang it, another snake bite?",
-    "oh no, Snake bite", "A deadly snake tried to devour you"
-    "whoops", "darn",
-    "snake bite", "oops", "tough luck"]
+    snakeMsg = [
+    "Oh no!",
+    "You've been sucked into a BLACK HOLE!!", "You'll have to start from further back",
+    "Be carefull.", "Black holes have a very strong gravatational force, try to steer clear of them!"]
 
     #indicates a ladder climb!
-    ladder_txt = [
-    "This laddder will bring you closer to victory",
-    "woww, reach for the stars",
+    ladderMsg = [
+    "Congradulations!",
+    "You have entered a wormhole!",
     "nailed it, Go Go Go",
-    "Congratulation, the ladder has jumped you forward ",
-    "level up! (not really)", "you got it",
-    "ladder aqquired", "yaayyy!!"]
-
-    def is_empty(lst): return len(lst)==0
-    def enQueue(lst,data): return lst.append(data)
-    def front(lst): return lst[0]
-    def deQueue(lst): return lst.pop(0)
+    "Congratulation, this portal has transported you forward!",
+    "The Force is with you, young one."]
 
 
+# is board size == 10
+# -------------------------------------------------------------------------------------------------------------------------------
     numbers=[] #--------This list stores numbers from 1 to 100.--------------#
     #------------Storing all numbers from 1 to 101 in a list------------------#
     for i in range(1,101): numbers.append(i)
@@ -92,9 +91,9 @@ def game(size=10):
     #----------Storing The loaction of snakes in a dictionary---------------------#
     #----------snake heads are keys and snake tails are values--------------------#
     snakes = {
-    99: 78,
+    99: 41,
     95: 75,
-    93: 73,
+    93: 80,
     87: 24,
     17: 7,
     62: 19,
@@ -140,7 +139,11 @@ def game(size=10):
 
     def num_location(x,y):
         return nums[(x,y)]
+# -------------------------------------------------------------------------------------------------------------------------------
+# if size board == 15
 
+# -------------------------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------------------------------------
     #-----------Keeping a track of those locations where player has to move in reverse-------------------#
 
     #----------Check if the player won or not----------#
@@ -217,8 +220,8 @@ def game(size=10):
     def show_snake_txt():
         x=500
         y=50
-        msg = deQueue(snake_txt)
-        enQueue(snake_txt,msg)
+        msg = deQueue(snakeMsg)
+        enQueue(snakeMsg,msg)
         font = pygame.font.Font('freesansbold.ttf', 32)
         text = font.render(msg, False,(255, 255, 255) )
         textRect = text.get_rect()
@@ -228,8 +231,8 @@ def game(size=10):
     def show_ladder_txt():
         x=500
         y=50
-        msg = deQueue(ladder_txt)
-        enQueue(ladder_txt,msg)
+        msg = deQueue(ladderMsg)
+        enQueue(ladderMsg,msg)
         font = pygame.font.Font('freesansbold.ttf', 32)
         text = font.render(msg, False,(255, 255, 255) )
         textRect = text.get_rect()
