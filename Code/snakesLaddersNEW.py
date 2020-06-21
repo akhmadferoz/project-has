@@ -29,7 +29,7 @@ def theme():
     mixer.music.set_volume(0.7)
 
 
-theme()
+# theme()
 
 
 def game(size=10):
