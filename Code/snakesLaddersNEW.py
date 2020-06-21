@@ -32,7 +32,7 @@ def theme():
 def game(size=10):
     #--------------Initializing Pygame and the screen---------------# 
     pygame.init()
-    screen=pygame.display.set_mode((1000,667))
+    screen=pygame.display.set_mode((1200,667))
     pygame.display.set_caption("Snakes & Ladders - Space Eddition")
     background = pygame.image.load("space-background.png")
     #----------Loading the images of the players-----------#
@@ -43,6 +43,13 @@ def game(size=10):
     ship5 = pygame.image.load('ship5.png')
     ship6 = pygame.image.load('ship6.png')
 
+
+    Ship1 = pygame.image.load('ship1-BIG.png')
+    Ship2 = pygame.image.load('ship2-BIG.png')
+    Ship3 = pygame.image.load('ship3-BIG.png')
+    Ship4 = pygame.image.load('ship4-BIG.png')
+    Ship5 = pygame.image.load('ship5-BIG.png')
+    Ship6 = pygame.image.load('ship6-BIG.png')
         
     def ship_music():
         mixer.init()
@@ -86,7 +93,9 @@ def game(size=10):
 
     #--------Loading the snakes and ladder images-----------#
     snakeImg = pygame.image.load('snekPortal10.png')
+    snakeTail = pygame.image.load('snekPortal10_X.png')
     ladderImg = pygame.image.load('portal10.png')
+    ladderHead = pygame.image.load('portal10_X.png')
 
                 #------------Go from Key to Value----------------#
     #----------Storing The loaction of snakes in a dictionary---------------------#
@@ -152,11 +161,6 @@ def game(size=10):
     #--------The initial Co-ordinates of the player----------#
     p1_X, p1_Y= 0, 600
 
-    #--------The change in x and y co-ordinates is initally zero--------------#
-    # p1_x_change = 0
-    # p1_y_change = 0
-
-
     #--------The players are initially not moving--------------#
     moving = None
     #------------The previous and future values re initially zero as the dice has not been rolled------------------#
@@ -166,7 +170,7 @@ def game(size=10):
 
     #---------------The co-ordinates for the roll button to be displayed------------#
     roll_x = 750
-    roll_y = 570
+    roll_y = 594.5
 
     #-------------The co-ordinates for the dice to be displayed==============#
     dice_x = 750
@@ -243,12 +247,24 @@ def game(size=10):
             snake_y = xy_location(snake)[1]
             screen.blit(snakeImg,(snake_x,snake_y))
 
+    def show_snakeTails():
+        for snake in snakes:
+            snake_x = xy_location(snakes[snake])[0]
+            snake_y = xy_location(snakes[snake])[1]
+            screen.blit(snakeTail,(snake_x,snake_y))
+
     #-------------This function displays all the ladder locations-------------#
     def show_ladders():
         for ladder in ladders:
             ladder_x = xy_location(ladder)[0]
             ladder_y = xy_location(ladder)[1]    
             screen.blit(ladderImg,(ladder_x,ladder_y))
+
+    def show_laddersHeads():
+        for ladder in ladders:
+            ladder_x = xy_location(ladders[ladder])[0]
+            ladder_y = xy_location(ladders[ladder])[1]    
+            screen.blit(ladderHead,(ladder_x,ladder_y))
 
     #------------This function grids a particular number in a particular x,y co-ordinate-------------#
     def board(x,y,number):
@@ -281,7 +297,7 @@ def game(size=10):
         a,b = 100,600
         for i in range(10):
             if i%2==0:
-                for j in range(xx,yy):
+                for j in range(xx,yy):                        
                     board(a,b,numbers[j])
                     a+=60
                 xx,yy=xx+20,yy+20
@@ -294,12 +310,13 @@ def game(size=10):
 
 
     def whose_turn(x):
-        if x=="ship1":screen.blit(ship1, (750,300))
-        if x=="ship2":screen.blit(ship2, (750,300))
-        if x=="ship3":screen.blit(ship3, (750,300))
-        if x=="ship4":screen.blit(ship4, (750,300))
-        if x=="ship5":screen.blit(ship5, (750,300))
-        if x=="ship6":screen.blit(ship6, (750,300))
+        if x:
+            if x=="ship1":screen.blit(Ship2, (750,300))
+            if x=="ship2":screen.blit(Ship3, (750,300))
+            if x=="ship3":screen.blit(Ship4, (750,300))
+            if x=="ship4":screen.blit(Ship5, (750,300))
+            if x=="ship5":screen.blit(Ship6, (750,300))
+            if x=="ship6":screen.blit(Ship1, (750,300))
 
     #-----Initially the dice is zero---------#
     dice = 0
@@ -309,8 +326,8 @@ def game(size=10):
 
     heroes = ["ship1","ship2","ship3","ship4","ship5","ship6"]
     
-    img1 = pygame.image.load('dice1.png')
-    ship = "ship1"
+    img1 = False
+    ship = "ship6"
     #-----The game will be running unless the player presses the quit button----------#
     running=True
     while running: #------ Keep on running the game unless player presses quit--------#
@@ -321,12 +338,11 @@ def game(size=10):
                 running=False #---------End the loop---------#
             if event.type == pygame.MOUSEBUTTONUP: #-----If user presses mouse button-----------#
                 pos = pygame.mouse.get_pos() #---------Get the position of the mouse--------#
-                # print(pos)
-                if 750<=pos[0]<=960 and 572<=pos[1]<=657: #---If the player presses the roll button----------#
+                if 769<=pos[0]<=978 and 594<=pos[1]<=666: #---If the player presses the roll button----------#
                     img1, dice=display_dice()
                     moving=True
 
-        screen.blit(img1,(dice_x,dice_y))
+        if img1: screen.blit(img1,(dice_x,dice_y))
         #-------- If Players are moving----------#
         while moving:
             current_player = deQueue(heroes) #-------Whose turn is it?---------#
@@ -382,6 +398,8 @@ def game(size=10):
         p6(ship6_x,ship6_y)  #-------Display the player-----#
         show_ladders() #------Show all the ladders-------#
         show_snakes()  #--------Show all the snakes--------#
+        show_snakeTails()
+        show_laddersHeads()
         pygame.display.update() #------Keep updating the display--------#
 
 
