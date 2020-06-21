@@ -21,7 +21,15 @@ from pygame import mixer
 import math
 import time
 
-def game():
+def theme():
+    mixer.init()
+    mixer.music.load("Thoughts on the Road (new ed).wav")
+    mixer.music.play()
+    mixer.music.set_volume(0.7)
+
+# theme()
+
+def game(size=10):
     #--------------Initializing Pygame and the screen---------------# 
     pygame.init()
     screen=pygame.display.set_mode((1000,667))
@@ -30,19 +38,13 @@ def game():
     #----------Loading the images of the players-----------#
     player1 = pygame.image.load('ship1.png')
     player2 = pygame.image.load('ship2.png')
-    player1 = pygame.image.load('ship3.png')
-    player1 = pygame.image.load('ship4.png')
+    player3 = pygame.image.load('ship3.png')
+    player4 = pygame.image.load('ship4.png')
     player5 = pygame.image.load('ship5.png')
     player6 = pygame.image.load('ship6.png')
 
-
-    def BatMusic():
-        mixer.init()
-        mixer.music.load("BatMus.wav")
-        mixer.music.play()
-        mixer.music.set_volume(0.7)
         
-    def SupMusic():
+    def ship_music():
         mixer.init()
         mixer.music.load("SupMus.wav")
         mixer.music.play()
@@ -83,8 +85,8 @@ def game():
     for i in range(1,101): numbers.append(i)
 
     #--------Loading the snakes and ladder images-----------#
-    snakeImg = pygame.image.load('portal.png')
-    ladderImg = pygame.image.load('portal.png')
+    snakeImg = pygame.image.load('portal10.png')
+    ladderImg = pygame.image.load('portal10.png')
 
                 #------------Go from Key to Value----------------#
     #----------Storing The loaction of snakes in a dictionary---------------------#
@@ -116,7 +118,7 @@ def game():
     #------Key: Number-----Value: (x,y) co-ordinate--------------#
     location = {0:(0,600)}
     xx,yy,mm,nn = 0,10,19,9
-    a,b = 60,600
+    a,b = 100,600
     for i in range(10):
         if i%2==0:
             for j in range(xx,yy):
@@ -128,7 +130,7 @@ def game():
                 location[numbers[j]] = (a,b)
                 a+=60
             mm,nn = mm+20,nn+20
-        a,b=60,b-60
+        a,b=100,b-60
 
     def xy_location(number):
         return location[number]
@@ -138,8 +140,6 @@ def game():
 
     def num_location(x,y):
         return nums[(x,y)]
-
-    # def wye(location): return location in wyes
 
     #-----------Keeping a track of those locations where player has to move in reverse-------------------#
 
@@ -165,12 +165,12 @@ def game():
 
 
     #---------------The co-ordinates for the roll button to be displayed------------#
-    roll_x = 868
+    roll_x = 750
     roll_y = 594.5
 
     #-------------The co-ordinates for the dice to be displayed==============#
-    dice_x = 863
-    dice_y = 144
+    dice_x = 750
+    dice_y = 80
 
 
     #-----------This funcation draws the roll button-------------------#
@@ -245,14 +245,14 @@ def game():
         for snake in snakes:
             snake_x = xy_location(snake)[0]
             snake_y = xy_location(snake)[1]
-            screen.blit(snakeImg,(snake_x+20,snake_y+20))
+            screen.blit(snakeImg,(snake_x,snake_y))
 
     #-------------This function displays all the ladder locations-------------#
     def show_ladders():
         for ladder in ladders:
             ladder_x = xy_location(ladder)[0]
             ladder_y = xy_location(ladder)[1]    
-            screen.blit(ladderImg,(ladder_x+20,ladder_y+20))
+            screen.blit(ladderImg,(ladder_x,ladder_y))
 
     #------------This function grids a particular number in a particular x,y co-ordinate-------------#
     def board(x,y,number):
@@ -297,16 +297,15 @@ def game():
             a,b=100,b-60
 
 
-
     #-----Initially the dice is zero---------#
     dice = 0
 
     #-------The initial positions of the player--------#
-    players = {"Batman": (0,600), "Superman":(0,600)}
+    players = {"ship1": (0,600), "ship2":(0,600), "ship3":(0,600),"ship4":(0,600),"ship5":(0,600) ,"ship6":(0,600)}
 
-    heroes = ["Batman","Superman"]
-
-    img1 = pygame.image.load('portal10.png')
+    heroes = ["ship1","ship2","ship3","ship4","ship5","ship6"]
+    
+    img1 = pygame.image.load('dice1.png')
     #-----The game will be running unless the player presses the quit button----------#
     running=True
     while running: #------ Keep on running the game unless player presses quit--------#
@@ -317,26 +316,20 @@ def game():
                 running=False #---------End the loop---------#
             if event.type == pygame.MOUSEBUTTONUP: #-----If user presses mouse button-----------#
                 pos = pygame.mouse.get_pos() #---------Get the position of the mouse--------#
-                if 675<=pos[0]<=775 and 500<=pos[1]<=600: #---If the player presses the roll button----------#
+                if 769<=pos[0]<=978 and 594<=pos[1]<=666: #---If the player presses the roll button----------#
                     img1, dice=display_dice()
                     moving=True
 
-
         screen.blit(img1,(dice_x,dice_y))
-
-        #--------If Players are moving------------#
+        #-------- If Players are moving----------#
         while moving:
             current_player = deQueue(heroes) #-------Whose turn is it?---------#
-            if current_player=="Batman": 
-                BatMusic() #-------Play Batman Music---------#
-            elif current_player=="Superman":
-                SupMusic() #----------Play Superman Music---------#
             enQueue(heroes,current_player)  
             xy_position = players[current_player] #------Cordinates of that player------# 
             XX = xy_position[0]
             YY = xy_position[1] 
             old=num_location(XX,YY) #------Previous Location------#
-            new = dice+old    #-----------Updated Location-----#
+            new = dice+old   #-----------Updated Location-----#
             if win_check((XX,YY)) or new>100: #---------If a player won------#
                 running=False
             elif new>0 and moving and not snaked(new)==False: #-----If the player lands on snake------#
@@ -358,10 +351,10 @@ def game():
                 moving=False
 
 
-        bman_x = players["Batman"][0]  #----updated X-cordinate of Batman--------#
-        bman_y = players["Batman"][1] #----updated Y-cordinate of Batman--------#
-        sman_x = players["Superman"][0] #----updated X-cordinate of Superman--------#
-        sman_y = players["Superman"][1] #----updated Y-cordinate of Superman--------#
+        bman_x = players["ship1"][0]  #----updated X-cordinate of Batman--------#
+        bman_y = players["ship1"][1] #----updated Y-cordinate of Batman--------#
+        sman_x = players["ship2"][0] #----updated X-cordinate of Superman--------#
+        sman_y = players["ship2"][1] #----updated Y-cordinate of Superman--------#
 
         roll_button()  #------Display the roll button-------#
         square()
@@ -385,8 +378,11 @@ def start():  #------The Welcome Display-------#
         for event in pygame.event.get():
             if event.type == pygame.QUIT: intro = False
             elif event.type == pygame.KEYDOWN: #-----If user presses enter start game---------#
-                if event.key == pygame.K_RETURN:
+                if event.key == pygame.K_1:
                     game()
+                    intro=False
+                if event.key == pygame.K_2:
+                    game(15)
                     intro=False
         pygame.display.update()
 
