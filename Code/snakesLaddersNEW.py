@@ -181,7 +181,13 @@ def game(size=10):
             17: 7,
             62: 19,
             54: 34,
-            64: 60
+            64: 60,
+            224: 147,
+            146: 82,
+            177: 154,
+            101: 47,
+            155: 22,
+            211: 188
         }
         #----------Storing The loaction of Ladders in a dictionary---------------------#
         #----------Ladder tails are keys and Ladder heads are values--------------------#
@@ -193,7 +199,13 @@ def game(size=10):
             9: 31,
             28: 84,
             71: 91,
-            51: 67
+            51: 67,
+            102: 106,
+            135: 180,
+            120: 123,
+            1: 2,
+            202: 210,
+            5: 17
         }
 
         #------This dictionary stores all the locations of the board-------#
@@ -286,6 +298,16 @@ def game(size=10):
     def p5(x, y): screen.blit(ship5, (x, y))
     def p6(x, y): screen.blit(ship6, (x, y))
 
+    # Function to display helper table
+    key10 = pygame.image.load('key10.png')
+    key15 = pygame.image.load('key15.png')
+
+    def dispTable():
+        x, y = 975, 100
+        if size == 10:
+            screen.blit(key10, (x, y))
+        else:
+            screen.blit(key15, (x, y))
     #----------------This function tells if the player is in a snake location---------#
 
     def snaked(location):
@@ -529,6 +551,7 @@ def game(size=10):
         show_snakes()  # --------Show all the snakes--------#
         show_snakeTails()
         show_laddersHeads()
+        dispTable()
         p1(ship1_x, ship1_y)  # -------Display the player------#
         p2(ship2_x, ship2_y)  # -------Display the player-----#
         p3(ship3_x, ship4_y)  # -------Display the player------#
