@@ -1,15 +1,11 @@
 '''
 This is the source code for the game of Snakes & Ladders.
-
 Course: CS 102 - Data Structures & Algorithms (L2)
 Instructor: Dr. Syeda Saleha Raza
-
 Team Members:
-
 Ahmad Feroz (06109)
 Habib Shehzad (05888)
 Synclair Samson (05901)
-
 For information on the rules of the game and how the game is structured please refer to the Readme.md file.
 '''
 
@@ -85,74 +81,146 @@ def game(size=10):
         "The Force is with you, young one."]
 
 
+    if size==10:
+        snakeImg = pygame.image.load('snekPortal10.png')
+        snakeTail = pygame.image.load('snekPortal10_X.png')
+        ladderImg = pygame.image.load('portal10.png')
+        ladderHead = pygame.image.load('portal10_X.png')
+    if size==15:
+        snakeImg = pygame.image.load('snekPortal15.png')
+        snakeTail = pygame.image.load('snekPortal15_X.png')
+        ladderImg = pygame.image.load('portal15.png')
+        ladderHead = pygame.image.load('portal15_X.png')
+
 # is board size == 10
+    if size==10:
 # -------------------------------------------------------------------------------------------------------------------------------
-    numbers = []  # --------This list stores numbers from 1 to 100.--------------#
-    #------------Storing all numbers from 1 to 101 in a list------------------#
-    for i in range(1, 101):
-        numbers.append(i)
+        numbers = []  # --------This list stores numbers from 1 to 100.--------------#
+        #------------Storing all numbers from 1 to 101 in a list------------------#
+        for i in range(1, 101):
+            numbers.append(i)
 
-    #--------Loading the snakes and ladder images-----------#
-    snakeImg = pygame.image.load('snekPortal10.png')
-    snakeTail = pygame.image.load('snekPortal10_X.png')
-    ladderImg = pygame.image.load('portal10.png')
-    ladderHead = pygame.image.load('portal10_X.png')
+        #--------Loading the snakes and ladder images-----------#
+        snakeImg = pygame.image.load('snekPortal10.png')
+        snakeTail = pygame.image.load('snekPortal10_X.png')
+        ladderImg = pygame.image.load('portal10.png')
+        ladderHead = pygame.image.load('portal10_X.png')
 
-    #------------Go from Key to Value----------------#
-    #----------Storing The loaction of snakes in a dictionary---------------------#
-    #----------snake heads are keys and snake tails are values--------------------#
-    snakes = {
-        99: 41,
-        95: 75,
-        93: 80,
-        87: 24,
-        17: 7,
-        62: 19,
-        54: 34,
-        64: 60
-    }
-    #----------Storing The loaction of Ladders in a dictionary---------------------#
-    #----------Ladder tails are keys and Ladder heads are values--------------------#
-    ladders = {
-        63: 81,
-        40: 59,
-        20: 38,
-        4: 14,
-        9: 31,
-        28: 84,
-        71: 91,
-        51: 67
-    }
+        #------------Go from Key to Value----------------#
+        #----------Storing The loaction of snakes in a dictionary---------------------#
+        #----------snake heads are keys and snake tails are values--------------------#
+        snakes = {
+            99: 41,
+            95: 75,
+            93: 80,
+            87: 24,
+            17: 7,
+            62: 19,
+            54: 34,
+            64: 60
+        }
+        #----------Storing The loaction of Ladders in a dictionary---------------------#
+        #----------Ladder tails are keys and Ladder heads are values--------------------#
+        ladders = {
+            63: 81,
+            40: 59,
+            20: 38,
+            4: 14,
+            9: 31,
+            28: 84,
+            71: 91,
+            51: 67
+        }
 
-    #------This dictionary stores all the locations of the board-------#
-    #------Key: Number-----Value: (x,y) co-ordinate--------------#
-    location = {0: (0, 600)}
-    xx, yy, mm, nn = 0, 10, 19, 9
-    a, b = 100, 600
-    for i in range(10):
-        if i % 2 == 0:
-            for j in range(xx, yy):
-                location[numbers[j]] = (a, b)
-                a += 60
-            xx, yy = xx+20, yy+20
-        else:
-            for j in range(mm, nn, -1):
-                location[numbers[j]] = (a, b)
-                a += 60
-            mm, nn = mm+20, nn+20
-        a, b = 100, b-60
+        #------This dictionary stores all the locations of the board-------#
+        #------Key: Number-----Value: (x,y) co-ordinate--------------#
+        location = {0: (0, 600)}
+        xx, yy, mm, nn = 0, 10, 19, 9
+        a, b = 100, 600
+        for i in range(10):
+            if i % 2 == 0:
+                for j in range(xx, yy):
+                    location[numbers[j]] = (a, b)
+                    a += 60
+                xx, yy = xx+20, yy+20
+            else:
+                for j in range(mm, nn, -1):
+                    location[numbers[j]] = (a, b)
+                    a += 60
+                mm, nn = mm+20, nn+20
+            a, b = 100, b-60
 
-    def xy_location(number):
-        return location[number]
+        def xy_location(number):
+            return location[number]
 
-    nums = {}
-    for number in location:
-        nums[location[number]] = number
+        nums = {}
+        for number in location:
+            nums[location[number]] = number
 
-    def num_location(x, y):
-        return nums[(x, y)]
-# -------------------------------------------------------------------------------------------------------------------------------
-# if size board == 15
+        def num_location(x, y):
+            return nums[(x, y)]
+    # -------------------------------------------------------------------------------------------------------------------------------
+    if size == 15:
+    # -------------------------------------------------------------------------------------------------------------------------------
+        numbers = []  # --------This list stores numbers from 1 to 100.--------------#
+        #------------Storing all numbers from 1 to 101 in a list------------------#
+        for i in range(1, 226): numbers.append(i)
+
+        #--------Loading the snakes and ladder images-----------
+
+        #------------Go from Key to Value----------------#
+        #----------Storing The loaction of snakes in a dictionary---------------------#
+        #----------snake heads are keys and snake tails are values--------------------#
+        snakes = {
+            99: 41,
+            95: 75,
+            93: 80,
+            87: 24,
+            17: 7,
+            62: 19,
+            54: 34,
+            64: 60
+        }
+        #----------Storing The loaction of Ladders in a dictionary---------------------#
+        #----------Ladder tails are keys and Ladder heads are values--------------------#
+        ladders = {
+            63: 81,
+            40: 59,
+            20: 38,
+            4: 14,
+            9: 31,
+            28: 84,
+            71: 91,
+            51: 67
+        }
+
+        #------This dictionary stores all the locations of the board-------#
+        #------Key: Number-----Value: (x,y) co-ordinate--------------#
+        location = {0: (0, 600)}
+        xx, yy, mm, nn = 0, 15, 29, 14
+        a, b = 100, 600
+        for i in range(15):
+            if i % 2 == 0:
+                for j in range(xx, yy):
+                    location[numbers[j]] = (a, b)
+                    a += 40
+                xx, yy = xx+30, yy+30
+            else:
+                for j in range(mm, nn, -1):
+                    location[numbers[j]] = (a, b)
+                    a += 40
+                mm, nn = mm+30, nn+30
+            a, b = 100, b-40
+
+        def xy_location(number):
+            return location[number]
+
+        nums = {}
+        for number in location:
+            nums[location[number]] = number
+
+        def num_location(x, y):
+            return nums[(x, y)]
 
 # -------------------------------------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------------------------------------
@@ -160,13 +228,10 @@ def game(size=10):
 
     #----------Check if the player won or not----------#
     def win_check(location):
-        if num_location(location[0], location[1]) == 100:
+        if num_location(location[0], location[1]) == 100 or num_location(location[0], location[1])==225:
             return True
         else:
             return False
-
-    #--------The initial Co-ordinates of the player----------#
-    p1_X, p1_Y = 0, 600
 
     #--------The players are initially not moving--------------#
     moving = None
@@ -284,12 +349,20 @@ def game(size=10):
 
     #------------This function grids a particular number in a particular x,y co-ordinate-------------#
     def board(x, y, number):
-        pygame.draw.rect(screen, (225, 225, 225), (x, y, 60, 60), 2)
-        font = pygame.font.Font('freesansbold.ttf', 32)
-        text = font.render(str(number), False, (255, 255, 255))
-        textRect = text.get_rect()
-        textRect.center = (x+30, y+30)
-        screen.blit(text, textRect)
+        if size==10:
+            pygame.draw.rect(screen, (225, 225, 225), (x, y, 60, 60), 2)
+            font = pygame.font.Font('freesansbold.ttf', 32)
+            text = font.render(str(number), False, (255, 255, 255))
+            textRect = text.get_rect()
+            textRect.center = (x+30, y+30)
+            screen.blit(text, textRect)
+        if size==15:
+            pygame.draw.rect(screen, (225, 225, 225), (x, y, 40, 40), 2)
+            font = pygame.font.Font('freesansbold.ttf', 15)
+            text = font.render(str(number), False, (255, 255, 255))
+            textRect = text.get_rect()
+            textRect.center = (x+20, y+20)
+            screen.blit(text, textRect)
 
     #--------------This function sends all the numbers in the above function------------#
     #--------------In such a way that we get classic snakes and ladder board------------#
@@ -308,20 +381,36 @@ def game(size=10):
                          left, top, width, height], filled)
 
     def getBoard():
-        xx, yy, mm, nn = 0, 10, 19, 9
-        a, b = 100, 600
-        for i in range(10):
-            if i % 2 == 0:
-                for j in range(xx, yy):
-                    board(a, b, numbers[j])
-                    a += 60
-                xx, yy = xx+20, yy+20
-            else:
-                for j in range(mm, nn, -1):
-                    board(a, b, numbers[j])
-                    a += 60
-                mm, nn = mm+20, nn+20
-            a, b = 100, b-60
+        if size==10:
+            xx, yy, mm, nn = 0, 10, 19, 9
+            a, b = 100, 600
+            for i in range(10):
+                if i % 2 == 0:
+                    for j in range(xx, yy):
+                        board(a, b, numbers[j])
+                        a += 60
+                    xx, yy = xx+20, yy+20
+                else:
+                    for j in range(mm, nn, -1):
+                        board(a, b, numbers[j])
+                        a += 60
+                    mm, nn = mm+20, nn+20
+                a, b = 100, b-60
+        elif size==15:
+            xx, yy, mm, nn = 0, 15, 29, 14
+            a, b = 100, 600
+            for i in range(15):
+                if i % 2 == 0:
+                    for j in range(xx, yy):
+                        board(a, b, numbers[j])
+                        a += 40
+                    xx, yy = xx+30, yy+30
+                else:
+                    for j in range(mm, nn, -1):
+                        board(a, b, numbers[j])
+                        a += 40
+                    mm, nn = mm+30, nn+30
+                a, b = 100, b-40
 
     def whose_turn(x):
         if x:
@@ -432,16 +521,16 @@ def game(size=10):
         roll_button()  # ------Display the roll button-------#
         square()
         getBoard()  # --------Display the Board---------#
+        show_ladders()  # ------Show all the ladders-------#
+        show_snakes()  # --------Show all the snakes--------#
+        show_snakeTails()
+        show_laddersHeads()
         p1(ship1_x, ship1_y)  # -------Display the player------#
         p2(ship2_x, ship2_y)  # -------Display the player-----#
         p3(ship3_x, ship4_y)  # -------Display the player------#
         p4(ship4_x, ship4_y)  # -------Display the player-----#
         p5(ship5_x, ship5_y)  # -------Display the player------#
         p6(ship6_x, ship6_y)  # -------Display the player-----#
-        show_ladders()  # ------Show all the ladders-------#
-        show_snakes()  # --------Show all the snakes--------#
-        show_snakeTails()
-        show_laddersHeads()
         pygame.display.update()  # ------Keep updating the display--------#
 
 
