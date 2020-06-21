@@ -35,12 +35,20 @@ def game(size=10):
     pygame.display.set_caption("Snakes & Ladders - Space Eddition")
     background = pygame.image.load("space-background.png")
     #----------Loading the images of the players-----------#
-    ship1 = pygame.image.load('ship1.png')
-    ship2 = pygame.image.load('ship2.png')
-    ship3 = pygame.image.load('ship3.png')
-    ship4 = pygame.image.load('ship4.png')
-    ship5 = pygame.image.load('ship5.png')
-    ship6 = pygame.image.load('ship6.png')
+    if size == 10:
+        ship1 = pygame.image.load('ship1.png')
+        ship2 = pygame.image.load('ship2.png')
+        ship3 = pygame.image.load('ship3.png')
+        ship4 = pygame.image.load('ship4.png')
+        ship5 = pygame.image.load('ship5.png')
+        ship6 = pygame.image.load('ship6.png')
+    elif size == 15:
+        ship1 = pygame.image.load('ship1-15.png')
+        ship2 = pygame.image.load('ship2-15.png')
+        ship3 = pygame.image.load('ship3-15.png')
+        ship4 = pygame.image.load('ship4-15.png')
+        ship5 = pygame.image.load('ship5-15.png')
+        ship6 = pygame.image.load('ship6-15.png')
 
     Ship1 = pygame.image.load('ship1-BIG.png')
     Ship2 = pygame.image.load('ship2-BIG.png')
