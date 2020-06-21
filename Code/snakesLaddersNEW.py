@@ -70,7 +70,8 @@ def game(size=10):
     snakeMsg = [
         "Oh no!",
         "You've been sucked into a BLACK HOLE!!", "You'll have to start from further back",
-        "Be carefull.", "Black holes have a very strong gravatational force, try to steer clear of them!"]
+        "Be carefull.", "Black holes have a very strong gravatational force, try to steer clear of them!",
+        "Your ship has been shot down", "Mayday", "Beep Boop", "We have entered a portal", "You have been downported"]
 
     # indicates a ladder climb!
     ladderMsg = [
@@ -78,23 +79,23 @@ def game(size=10):
         "You have entered a wormhole!",
         "nailed it, Go Go Go",
         "Congratulation, this portal has transported you forward!",
-        "The Force is with you, young one."]
+        "The Force is with you, young one.",
+        "We have ascended", "Your ship has risen", "Tractor beam on us", "Portaled up!", "Nice", "Wormhole imenent"]
 
-
-    if size==10:
+    if size == 10:
         snakeImg = pygame.image.load('snekPortal10.png')
         snakeTail = pygame.image.load('snekPortal10_X.png')
         ladderImg = pygame.image.load('portal10.png')
         ladderHead = pygame.image.load('portal10_X.png')
-    if size==15:
+    if size == 15:
         snakeImg = pygame.image.load('snekPortal15.png')
         snakeTail = pygame.image.load('snekPortal15_X.png')
         ladderImg = pygame.image.load('portal15.png')
         ladderHead = pygame.image.load('portal15_X.png')
 
 # is board size == 10
-    if size==10:
-# -------------------------------------------------------------------------------------------------------------------------------
+    if size == 10:
+        # -------------------------------------------------------------------------------------------------------------------------------
         numbers = []  # --------This list stores numbers from 1 to 100.--------------#
         #------------Storing all numbers from 1 to 101 in a list------------------#
         for i in range(1, 101):
@@ -161,12 +162,13 @@ def game(size=10):
             return nums[(x, y)]
     # -------------------------------------------------------------------------------------------------------------------------------
     if size == 15:
-    # -------------------------------------------------------------------------------------------------------------------------------
+        # -------------------------------------------------------------------------------------------------------------------------------
         numbers = []  # --------This list stores numbers from 1 to 100.--------------#
         #------------Storing all numbers from 1 to 101 in a list------------------#
-        for i in range(1, 226): numbers.append(i)
+        for i in range(1, 226):
+            numbers.append(i)
 
-        #--------Loading the snakes and ladder images-----------
+        # --------Loading the snakes and ladder images-----------
 
         #------------Go from Key to Value----------------#
         #----------Storing The loaction of snakes in a dictionary---------------------#
@@ -228,7 +230,7 @@ def game(size=10):
 
     #----------Check if the player won or not----------#
     def win_check(location):
-        if num_location(location[0], location[1]) == 100 or num_location(location[0], location[1])==225:
+        if num_location(location[0], location[1]) == 100 or num_location(location[0], location[1]) == 225:
             return True
         else:
             return False
@@ -349,14 +351,14 @@ def game(size=10):
 
     #------------This function grids a particular number in a particular x,y co-ordinate-------------#
     def board(x, y, number):
-        if size==10:
+        if size == 10:
             pygame.draw.rect(screen, (225, 225, 225), (x, y, 60, 60), 2)
             font = pygame.font.Font('freesansbold.ttf', 32)
             text = font.render(str(number), False, (255, 255, 255))
             textRect = text.get_rect()
             textRect.center = (x+30, y+30)
             screen.blit(text, textRect)
-        if size==15:
+        if size == 15:
             pygame.draw.rect(screen, (225, 225, 225), (x, y, 40, 40), 2)
             font = pygame.font.Font('freesansbold.ttf', 15)
             text = font.render(str(number), False, (255, 255, 255))
@@ -381,7 +383,7 @@ def game(size=10):
                          left, top, width, height], filled)
 
     def getBoard():
-        if size==10:
+        if size == 10:
             xx, yy, mm, nn = 0, 10, 19, 9
             a, b = 100, 600
             for i in range(10):
@@ -396,7 +398,7 @@ def game(size=10):
                         a += 60
                     mm, nn = mm+20, nn+20
                 a, b = 100, b-60
-        elif size==15:
+        elif size == 15:
             xx, yy, mm, nn = 0, 15, 29, 14
             a, b = 100, 600
             for i in range(15):
@@ -444,17 +446,19 @@ def game(size=10):
         screen.fill((255, 255, 255))  # ---------FIll the screen------------#
         screen.blit(background, (0, 0))
 
-        for event in pygame.event.get():  #--------Looping over all the events in the game---------#
-            if event.type==pygame.QUIT: #--------If the user quits the game------------#
-                running=False #---------End the loop---------#
-            if event.type == pygame.MOUSEBUTTONUP: #-----If user presses mouse button-----------#
-                pos = pygame.mouse.get_pos() #---------Get the position of the mouse--------#
+        for event in pygame.event.get():  # --------Looping over all the events in the game---------#
+            if event.type == pygame.QUIT:  # --------If the user quits the game------------#
+                running = False  # ---------End the loop---------#
+            if event.type == pygame.MOUSEBUTTONUP:  # -----If user presses mouse button-----------#
+                pos = pygame.mouse.get_pos()  # ---------Get the position of the mouse--------#
                 # print(pos)
-                if 751<=pos[0]<=958 and 552<=pos[1]<=635: #---If the player presses the roll button----------#
-                    img1, dice=display_dice()
-                    moving=True
+                # ---If the player presses the roll button----------#
+                if 751 <= pos[0] <= 958 and 552 <= pos[1] <= 635:
+                    img1, dice = display_dice()
+                    moving = True
 
-        if img1: screen.blit(img1,(dice_x,dice_y))
+        if img1:
+            screen.blit(img1, (dice_x, dice_y))
         #-------- If Players are moving----------#
         while moving:
             # -------Whose turn is it?---------#
