@@ -12,29 +12,27 @@ Synclair Samson (05901)
 
 For information on the rules of the game and how the game is structured please refer to the Readme.md file.
 '''
-# --------------- Stack Commands ---------------------------------------------
-import random
 
+# --------------- Include Libraries ------------------------------------------
+
+import pygame
+import random
+from pygame import mixer
+import math
+import time
+# --------------- Stack Commands ---------------------------------------------
 
 def push(lst, x):
     lst.append(x)
-
-
 def pop(lst):
     return lst.pop()
-
-
 def top(lst):
     return lst[-1]
-
-
 def is_empty(lst):
     if len(lst) == 0:
         return True
     return False
 # --------------- Queue Commands ---------------------------------------------
-
-
 def Enqueue(lst, x, p):
     tup = (x, p)
     if len(lst) == 0:
@@ -53,42 +51,12 @@ def Enqueue(lst, x, p):
                     return lst
     lst.append(tup)
 
-
 def front(lst):
     return lst[0]
-
 
 def Dequeue(lst):
     p = lst.pop(0)
     return p[0]
-
-# --------------- Python Libraries -------------------------------------------
-
-
-# --------------- Function Prototypes ----------------------------------------
-'''
-void initializeBoard(int,int,char *);       //Sets board values based on size chosen by player
-void initializeSnakesLadders(int,char *);   //Allocates snakes & ladders on board
-char locateLadder(char *);                  //To be used by intSnakesLadders function
-char locateCurlySnake();                    //To be used by intSnakesLadders function
-char locateStraightSnake();                 //To be used by intSnakesLadders function
-int move();                                 //moves player according to die values player:# computer:@
-int stepSize();                             //calculates total of die values (5+6=14)
-int checkSnakes(int);                       //Checks for snake head on the player's location
-int checkLadders(int);                      //Checks for ladder bottom rung on the player's location
-void displayBoard(int,int,char [*][*]);     //Displays the playing board on the screen canvas
-void displayResults(int,int,int);           //Displays final results at the end of the game
-
-int diceRoll();
-int playComputer();
-int playHuman();
-'''
-# --------------- Main Program Start ---------------------------------------------------------------------------------------------------------------------------------
-
-
-def main():
-    pass
-# --------------- Main Program END -----------------------------------------------------------------------------------------------------------------------------------
 
 # --------------- Function Definitions --------------------------------------------------------------------------------------------------------------------------
 # --------------- Dice Roll ----------------------------------------
@@ -157,17 +125,75 @@ def checkLadders(icon):
 
 
 def initializeBoard():
-    pass
+    #--------------Initializing Pygame and the screen---------------# 
+    pygame.init()
+    screen=pygame.display.set_mode((1000,667))
+    pygame.display.set_caption("Snakes & Ladders - Space Eddition")
+    background = pygame.image.load("screen-01.png")
+
+    #----------Loading the images of the players-----------#
+    player1 = pygame.image.load('batman.png')
+    player2 = pygame.image.load('superman.png')
+
+    def batMusic():
+        mixer.init()
+        mixer.music.load("BatMus.wav")
+        mixer.music.play()
+        mixer.music.set_volume(0.7)
+        
+    def supMusic():
+        mixer.init()
+        mixer.music.load("SupMus.wav")
+        mixer.music.play()
+        mixer.music.set_volume(0.7)
+
+    #----------Loading all the possible dice roll images------------#
+    one = pygame.image.load('dice1.png')
+    two = pygame.image.load('dice2.png')
+    three = pygame.image.load('dice3.png')
+    four = pygame.image.load('dice4.png')
+    five = pygame.image.load('dice5.png')
+    six = pygame.image.load('dice6.png')
+
+    snakeImg = pygame.image.load('portal15.png')
+    ladderImg = pygame.image.load('portal15.png')
+
+
 # ----------------------------------------------------------------
 # --------------- Snakes & Ladders Initializing --------------------
+  #----------Storing The loaction of snakes in a dictionary---------
+  # ---------In this game, both sankes AND Ladders are represented by portals which are bi-directional
+    snakes = {
+    99: 78,
+    95: 75,
+    93: 73,
+    87: 24,
+    17: 7,
+    62: 19,
+    54: 34,
+    64: 60
+    }
+
+    ladders = {
+    63: 81,
+    40: 59,
+    20: 38,
+    4: 14,
+    9: 31,
+    28: 84,
+    71: 91,
+    51: 67
+    }
 # ----------------------------------------------------------------
+
 # --------------- Board Size: 10x10 ------------------------------------
+numbers = [i for i in range(1,101)]
+# --------------- Board Size: 15x15 ------------------------------------
+numbers = [i for i in range(1, 226)]
 # --------------- Ladders: x2 - 3 steps & x1 - 5 steps -----------------
 # --------------- Snakes: x2 Curly - 7 steps ---------------------------
 
 # --------------- Display Board ------------------------------------
-
-
 def displayBoard(x, y, gB):  # gB type == list?
     pass
 # --------------- Display Results ----------------------------------
@@ -175,3 +201,13 @@ def displayBoard(x, y, gB):  # gB type == list?
 
 def displayResults(player, machine, rounds):
     pass
+
+snakeMsg = "Oh no! You've been sucked into a black hole :("
+ladderMsg = "Nice work! You've entered a worm hole :D"
+# --------------- Main Program Start ---------------------------------------------------------------------------------------------------------------------------------
+
+
+def main():
+    pass
+# --------------- Main Program END -----------------------------------------------------------------------------------------------------------------------------------
+main()
