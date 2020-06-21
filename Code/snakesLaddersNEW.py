@@ -26,7 +26,7 @@ def game():
     pygame.init()
     screen=pygame.display.set_mode((1000,667))
     pygame.display.set_caption("Snakes & Ladders - Space Eddition")
-    background = pygame.image.load("board10.png")
+    background = pygame.image.load("space-background.png")
     #----------Loading the images of the players-----------#
     player1 = pygame.image.load('ship1.png')
     player2 = pygame.image.load('ship2.png')
@@ -256,7 +256,7 @@ def game():
 
     #------------This function grids a particular number in a particular x,y co-ordinate-------------#
     def board(x,y,number):
-        pygame.draw.rect(screen,(255,255,255,0),(x,y,60,60),1,)
+        pygame.draw.rect(screen,(225,225,225),(x,y,60,60),2)
         font = pygame.font.Font('freesansbold.ttf', 32)
         text = font.render(str(number), False,(255, 255, 255) )
         textRect = text.get_rect()
@@ -267,9 +267,22 @@ def game():
     #--------------This function sends all the numbers in the above function------------#
     #--------------In such a way that we get classic snakes and ladder board------------#
     #--------------------Where every second line is reversed----------------------------#
+
+    def square():
+        red=0
+        blue=0
+        green=0
+        left=100
+        top=60
+        width=600
+        height=600
+        filled=0
+        pygame.draw.rect(screen, [red, blue, green], [left, top, width, height], filled)
+
+
     def getBoard():
         xx,yy,mm,nn = 0,10,19,9
-        a,b = 60,600
+        a,b = 100,600
         for i in range(10):
             if i%2==0:
                 for j in range(xx,yy):
@@ -281,7 +294,7 @@ def game():
                     board(a,b,numbers[j])
                     a+=60
                 mm,nn = mm+20,nn+20
-            a,b=60,b-60
+            a,b=100,b-60
 
 
 
@@ -351,6 +364,7 @@ def game():
         sman_y = players["Superman"][1] #----updated Y-cordinate of Superman--------#
 
         roll_button()  #------Display the roll button-------#
+        square()
         getBoard()    #--------Display the Board---------#
         p1(bman_x,bman_y)  #-------Display the player------#
         p2(sman_x,sman_y)  #-------Display the player-----#
