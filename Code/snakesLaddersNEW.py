@@ -408,7 +408,7 @@ def game(size=10):
 
 def start():  #------The Welcome Display-------#
     pygame.init()   #-------Initialize Window------#
-    screen=pygame.display.set_mode((1000,667)) 
+    screen=pygame.display.set_mode((1200,667)) 
     pygame.display.set_caption("Snakes & Ladders - Space Eddition")
     intro=True
     background= pygame.image.load('screen-01.png')
