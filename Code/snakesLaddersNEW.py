@@ -294,7 +294,12 @@ def game(size=10):
 
 
     def whose_turn(x):
-        screen.blit(x, (750,300))
+        if x=="ship1":screen.blit(ship1, (750,300))
+        if x=="ship2":screen.blit(ship2, (750,300))
+        if x=="ship3":screen.blit(ship3, (750,300))
+        if x=="ship4":screen.blit(ship4, (750,300))
+        if x=="ship5":screen.blit(ship5, (750,300))
+        if x=="ship6":screen.blit(ship6, (750,300))
 
     #-----Initially the dice is zero---------#
     dice = 0
@@ -305,6 +310,7 @@ def game(size=10):
     heroes = ["ship1","ship2","ship3","ship4","ship5","ship6"]
     
     img1 = pygame.image.load('dice1.png')
+    ship = "ship1"
     #-----The game will be running unless the player presses the quit button----------#
     running=True
     while running: #------ Keep on running the game unless player presses quit--------#
@@ -323,6 +329,7 @@ def game(size=10):
         #-------- If Players are moving----------#
         while moving:
             current_player = deQueue(heroes) #-------Whose turn is it?---------#
+            ship = current_player
             enQueue(heroes,current_player)  
             xy_position = players[current_player] #------Cordinates of that player------# 
             XX = xy_position[0]
@@ -362,6 +369,7 @@ def game(size=10):
         ship6_x = players["ship6"][0] #----updated X-cordinate of Superman--------#
         ship6_y = players["ship6"][1] #----updated Y-cordinate of Superman-----
 
+        whose_turn(ship)
         roll_button()  #------Display the roll button-------#
         square()
         getBoard()    #--------Display the Board---------#
