@@ -166,7 +166,7 @@ def game(size=10):
 
     #---------------The co-ordinates for the roll button to be displayed------------#
     roll_x = 750
-    roll_y = 594.5
+    roll_y = 570
 
     #-------------The co-ordinates for the dice to be displayed==============#
     dice_x = 750
@@ -321,7 +321,8 @@ def game(size=10):
                 running=False #---------End the loop---------#
             if event.type == pygame.MOUSEBUTTONUP: #-----If user presses mouse button-----------#
                 pos = pygame.mouse.get_pos() #---------Get the position of the mouse--------#
-                if 769<=pos[0]<=978 and 594<=pos[1]<=666: #---If the player presses the roll button----------#
+                # print(pos)
+                if 750<=pos[0]<=960 and 572<=pos[1]<=657: #---If the player presses the roll button----------#
                     img1, dice=display_dice()
                     moving=True
 
