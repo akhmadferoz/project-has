@@ -25,7 +25,7 @@ def theme():
     mixer.music.set_volume(0.7)
 
 
-# theme()
+theme()
 
 
 def game(size=10):
@@ -562,7 +562,7 @@ def game(size=10):
         dispTable()
         p1(ship1_x, ship1_y)  # -------Display the player------#
         p2(ship2_x, ship2_y)  # -------Display the player-----#
-        p3(ship3_x, ship4_y)  # -------Display the player------#
+        p3(ship3_x, ship3_y)  # -------Display the player------#
         p4(ship4_x, ship4_y)  # -------Display the player-----#
         p5(ship5_x, ship5_y)  # -------Display the player------#
         p6(ship6_x, ship6_y)  # -------Display the player-----#
