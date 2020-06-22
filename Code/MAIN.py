@@ -27,7 +27,65 @@ def theme():
 
 
 # theme()
+def win_screen(player):
+    pygame.init()
+    screen = pygame.display.set_mode((1200, 667))
+    pygame.display.set_caption("Snakes & Ladders - Space Eddition")
+    win = True
+    background= pygame.image.load("space-background.png")
+    Ship1 = pygame.image.load('ship1-BIG.png')
+    Ship2 = pygame.image.load('ship2-BIG.png')
+    Ship3 = pygame.image.load('ship3-BIG.png')
+    Ship4 = pygame.image.load('ship4-BIG.png')
+    Ship5 = pygame.image.load('ship5-BIG.png')
+    Ship6 = pygame.image.load('ship6-BIG.png')
 
+
+    def display_text():
+        x = 600
+        y = 30
+        win="Congratulations " + player + " You Won. Press SPACE to Play again. Press Enter to Quit the Game."
+        font = pygame.font.Font('freesansbold.ttf', 20)
+        pygame.time.wait(500)
+        font = pygame.font.Font('freesansbold.ttf', 20)
+        text = font.render(win, False, (255, 255, 255))
+        textRect = text.get_rect()
+        textRect.center = (600, 30)
+        screen.blit(text, textRect)
+
+
+    def p1(): screen.blit(Ship1,(600,330))
+    def p2(): screen.blit(Ship2,(600,330))
+    def p3(): screen.blit(Ship3,(600,330))
+    def p4(): screen.blit(Ship4,(600,330))
+    def p5(): screen.blit(Ship5,(600,330))
+    def p6(): screen.blit(Ship6,(600,330))
+
+    while win:
+        screen.fill((0,0,0))
+        screen.blit(background, (0,0))
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                quit()
+                win = False
+            elif event.type == pygame.KEYDOWN:  # -----If user presses enter start game---------#
+                if event.key == pygame.K_SPACE:
+                    start()
+                    win = False
+                elif event.key == pygame.K_RETURN:
+                    quit()
+                    win=False
+
+        if player=="ship1": p1()
+        if player=="ship2": p2()
+        if player=="ship3": p3()
+        if player=="ship4": p4()
+        if player=="ship5": p5()
+        if player=="ship6": p6()
+    
+        display_text()
+
+        pygame.display.update()
 
 def game(size=10):
     #--------------Initializing Pygame and the screen---------------#
@@ -300,7 +358,7 @@ def game(size=10):
     def display_dice():
         dice1 = random.randint(1, 6)
         img1 = which_dice(dice1)
-        return img1, dice1
+        return img1, 97
 
     def display_location(xx,yy,x,y,player):
         num = num_location(xx,yy)
@@ -472,7 +530,6 @@ def game(size=10):
                     mm, nn = mm+30, nn+30
                 a, b = 100, b-40
 
-
     def whose_turn(x):
         if x:
             if x == "ship1": screen.blit(Ship2, (750, 300))
@@ -489,7 +546,10 @@ def game(size=10):
     players = {"ship1": (0, 600), "ship2": (0, 600), "ship3": (
         0, 600), "ship4": (0, 600), "ship5": (0, 600), "ship6": (0, 600)}
 
+    players = {"ship1":(0,600)}
+
     heroes = ["ship1", "ship2", "ship3", "ship4", "ship5", "ship6"]
+    heroes = ["ship1"]
 
     ladder=False
     snake=False
@@ -501,7 +561,6 @@ def game(size=10):
     while running:  # ------ Keep on running the game unless player presses quit--------#
         screen.fill((255, 255, 255))  # ---------FIll the screen------------#
         screen.blit(background, (0, 0))
-
         for event in pygame.event.get():  # --------Looping over all the events in the game---------#
             if event.type == pygame.QUIT:  # --------If the user quits the game------------#
                 running = False  # ---------End the loop---------#
@@ -533,45 +592,51 @@ def game(size=10):
             YY = xy_position[1]
             old = num_location(XX, YY)  # ------Previous Location------#
             new = dice+old  # -----------Updated Location-----#
-            if win_check((XX, YY)) or new > 100:  # ---------If a player won------#
-                running = False
             # -----If the player lands on snake------#
-            elif new > 0 and moving and not snaked(new) == False:
-                new = snaked(new)
-                snake=True
-                XX = xy_location(new)[0]
-                YY = xy_location(new)[1]
-                # -----Update Location-------#
-                players[current_player] = (XX, YY)
-                moving = False
-            # ---------If the player lands on ladder-------#
-            elif new > 0 and moving and not laddered(new) == False:
-                new = laddered(new)
-                ladder=True
-                XX = xy_location(new)[0]
-                YY = xy_location(new)[1]
-                # -----Update Location-------#
-                players[current_player] = (XX, YY)
-                moving = False
-            elif new > 0 and moving:  # ---------If neither snake nor ladder----------#
-                XX = xy_location(new)[0]
-                YY = xy_location(new)[1]
-                # -----Update Location-------#
-                players[current_player] = (XX, YY)
-                moving = False
+            try:
+                if num_location(players[current_player][0], players[current_player][1])>100 :
+                    win_screen(current_player)
+                    running=False
+                elif new > 0 and moving and not snaked(new) == False:
+                    new = snaked(new)
+                    snake=True
+                    XX = xy_location(new)[0]
+                    YY = xy_location(new)[1]
+                    # -----Update Location-------#
+                    players[current_player] = (XX, YY)
+                    moving = False
+                # ---------If the player lands on ladder-------#
+                elif new > 0 and moving and not laddered(new) == False:
+                    new = laddered(new)
+                    ladder=True
+                    XX = xy_location(new)[0]
+                    YY = xy_location(new)[1]
+                    # -----Update Location-------#
+                    players[current_player] = (XX, YY)
+                    moving = False
+                elif new > 0 and moving:  # ---------If neither snake nor ladder----------#
+                    XX = xy_location(new)[0]
+                    YY = xy_location(new)[1]
+                    # -----Update Location-------#
+                    players[current_player] = (XX, YY)
+                    moving = False
+            except KeyError:
+                win_screen(current_player)
+                running=False
 
         # ----updated XY-cordinate of ship1--------#
         ship1_x,ship1_y = players["ship1"][0], players["ship1"][1]
         # ----updated XY-cordinate of ship2--------#
-        ship2_x, ship2_y= players["ship2"][0], players["ship2"][1]
-        # ----updated XY-cordinate of ship3--------#
-        ship3_x,ship3_y = players["ship3"][0], players["ship3"][1]
-        # ----updated XY-cordinate of ship4--------#
-        ship4_x, ship4_y = players["ship4"][0], players["ship4"][1]
-        # ----updated XY-cordinate of ship5--------#
-        ship5_x, ship5_y = players["ship5"][0], players["ship5"][1]
-        # ----updated XY-cordinate of ship6--------#
-        ship6_x, ship6_y = players["ship6"][0], players["ship6"][1]
+        # ship2_x, ship2_y= players["ship2"][0], players["ship2"][1]
+        # # ----updated XY-cordinate of ship3--------#
+        # ship3_x,ship3_y = players["ship3"][0], players["ship3"][1]
+        # # ----updated XY-cordinate of ship4--------#
+        # ship4_x, ship4_y = players["ship4"][0], players["ship4"][1]
+        # # ----updated XY-cordinate of ship5--------#
+        # ship5_x, ship5_y = players["ship5"][0], players["ship5"][1]
+        # # ----updated XY-cordinate of ship6--------#
+        # ship6_x, ship6_y = players["ship6"][0], players["ship6"][1]
+
 
         whose_turn(ship)
         roll_button()  # ------Display the roll button-------#
@@ -583,11 +648,11 @@ def game(size=10):
         show_laddersHeads()
         dispTable()
         p1(ship1_x, ship1_y)  # -------Display the player------#
-        p2(ship2_x, ship2_y)  # -------Display the player-----#
-        p3(ship3_x, ship3_y)  # -------Display the player------#
-        p4(ship4_x, ship4_y)  # -------Display the player-----#
-        p5(ship5_x, ship5_y)  # -------Display the player------#
-        p6(ship6_x, ship6_y)  # -------Display the player-----#
+        # p2(ship2_x, ship2_y)  # -------Display the player-----#
+        # p3(ship3_x, ship3_y)  # -------Display the player------#
+        # p4(ship4_x, ship4_y)  # -------Display the player-----#
+        # p5(ship5_x, ship5_y)  # -------Display the player------#
+        # p6(ship6_x, ship6_y)  # -------Display the player-----#
         a1(ast1_x,ast1_y)
         a2(ast2_x,ast2_y)
         pygame.display.update()  # ------Keep updating the display--------#
@@ -617,41 +682,3 @@ def start():  # ------The Welcome Display-------#
 
 start()  # -------This starts the game--------
 
-
-def win_screen(player):
-    pygame.init()
-    screen = pygame.display.set_mode((1200, 667))
-    pygame.display.set_caption("Snakes & Ladders - Space Eddition")
-    win = True
-    background= pygame.image.load("space-working.png")
-    Ship1 = pygame.image.load('ship1-BIG.png')
-    Ship2 = pygame.image.load('ship2-BIG.png')
-    Ship3 = pygame.image.load('ship3-BIG.png')
-    Ship4 = pygame.image.load('ship4-BIG.png')
-    Ship5 = pygame.image.load('ship5-BIG.png')
-    Ship6 = pygame.image.load('ship6-BIG.png')
-
-    def p1(): screen.blit(Ship1,(0,0))
-    def p2(): screen.blit(Ship2,(0,0))
-    def p3(): screen.blit(Ship3,(0,0))
-    def p4(): screen.blit(Ship4,(0,0))
-    def p5(): screen.blit(Ship5,(0,0))
-    def p6(): screen.blit(Ship6,(0,0))
-
-    while win:
-        screen.fill((0,0,0))
-        screen.blit(background, (0,0))
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                intro = False
-            elif event.type == pygame.KEYDOWN:  # -----If user presses enter start game---------#
-                if event.key == pygame.K_R:
-                    start()
-                    win = False
-
-        if player=="ship1": p1()
-        if player=="ship2": p2()
-        if player=="ship3": p3()
-        if player=="ship4": p4()
-        if player=="ship5": p5()
-        if player=="ship6": p6()
