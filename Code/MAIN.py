@@ -14,10 +14,6 @@ For information on the rules of the game and how the game is structured please r
 import pygame
 import random
 from pygame import mixer
-import time
-import pygame.math as math
-from pygame.time import Clock
-import random as r
 
 def theme():
     mixer.init()
@@ -32,7 +28,7 @@ def win_screen(player):
     screen = pygame.display.set_mode((1200, 667))
     pygame.display.set_caption("Snakes & Ladders - Space Eddition")
     win = True
-    background= pygame.image.load("space-background.png")
+    background= pygame.image.load("12435.jpg")
     Ship1 = pygame.image.load('ship1-BIG.png')
     Ship2 = pygame.image.load('ship2-BIG.png')
     Ship3 = pygame.image.load('ship3-BIG.png')
@@ -42,8 +38,6 @@ def win_screen(player):
 
 
     def display_text():
-        x = 600
-        y = 30
         win="Congratulations " + player + " You Won. Press SPACE to Play again. Press Enter to Quit the Game."
         font = pygame.font.Font('freesansbold.ttf', 20)
         pygame.time.wait(500)
@@ -53,13 +47,13 @@ def win_screen(player):
         textRect.center = (600, 30)
         screen.blit(text, textRect)
 
-
-    def p1(): screen.blit(Ship1,(600,330))
-    def p2(): screen.blit(Ship2,(600,330))
-    def p3(): screen.blit(Ship3,(600,330))
-    def p4(): screen.blit(Ship4,(600,330))
-    def p5(): screen.blit(Ship5,(600,330))
-    def p6(): screen.blit(Ship6,(600,330))
+    def draw_ship(x,y):
+        if player=="ship1": screen.blit(Ship1,(x,y))
+        elif player=="ship2": screen.blit(Ship2,(x,y))
+        elif player=="ship3": screen.blit(Ship3,(x,y))
+        elif player=="ship4": screen.blit(Ship4,(x,y))
+        elif player=="ship5": screen.blit(Ship5,(x,y))
+        elif player=="ship6": screen.blit(Ship6,(x,y))
 
     while win:
         screen.fill((0,0,0))
@@ -75,16 +69,8 @@ def win_screen(player):
                 elif event.key == pygame.K_RETURN:
                     quit()
                     win=False
-
-        if player=="ship1": p1()
-        if player=="ship2": p2()
-        if player=="ship3": p3()
-        if player=="ship4": p4()
-        if player=="ship5": p5()
-        if player=="ship6": p6()
-    
+        draw_ship(500,230)
         display_text()
-
         pygame.display.update()
 
 def game(size=10):
@@ -139,8 +125,8 @@ def game(size=10):
     asty2 = pygame.image.load("asty2.png")
 
 
-    ast1_x, ast1_y, ast1_CX, ast1_CY= 1100,600,0,0
-    ast2_x,ast2_y,ast2_CX, ast2_CY= 1000,600,0,0
+    ast1_x, ast1_y,= 1100,600
+    ast2_x,ast2_y= 1000,600
 
 
     def a1(x,y): screen.blit(asty1, (x,y))
@@ -358,7 +344,7 @@ def game(size=10):
     def display_dice():
         dice1 = random.randint(1, 6)
         img1 = which_dice(dice1)
-        return img1, 97
+        return img1, dice1
 
     def display_location(xx,yy,x,y,player):
         num = num_location(xx,yy)
@@ -556,6 +542,9 @@ def game(size=10):
 
     img1 = False
     ship = "ship6"
+
+    ast1_CY = 50
+
     #-----The game will be running unless the player presses the quit button----------#
     running = True
     while running:  # ------ Keep on running the game unless player presses quit--------#
@@ -566,7 +555,6 @@ def game(size=10):
                 running = False  # ---------End the loop---------#
             if event.type == pygame.MOUSEBUTTONUP:  # -----If user presses mouse button-----------#
                 pos = pygame.mouse.get_pos()  # ---------Get the position of the mouse--------#
-                # print(pos)
                 # ---If the player presses the roll button----------#
                 if 751 <= pos[0] <= 958 and 552 <= pos[1] <= 635:
                     img1, dice = display_dice()
@@ -575,6 +563,14 @@ def game(size=10):
 
         if ladder: show_ladder_txt()
         if snake: show_snake_txt()
+
+        ast1_y-=ast1_CY
+        if ast1_y<50:
+            ast1_y=50
+            ast1_CY*=-1
+        if ast1_y>600:
+            ast1_y = 600
+            ast1_CY = 50
 
         if img1:
             screen.blit(img1, (dice_x, dice_y))
@@ -680,5 +676,5 @@ def start():  # ------The Welcome Display-------#
         pygame.display.update()
 
 
-start()  # -------This starts the game--------
+game() # -------This starts the game--------
 
