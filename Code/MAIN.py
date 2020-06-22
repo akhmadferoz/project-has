@@ -4,25 +4,25 @@ Course: CS 102 - Data Structures & Algorithms (L2)
 Instructor: Dr. Syeda Saleha Raza
 Team Members:
 Ahmad Feroz (06109)
-Habib Shehzad (05888)
+Habib Shahzad (05888)
 Synclair Samson (05901)
 For information on the rules of the game and how the game is structured please refer to the Readme.md file.
 '''
-
-
 #----------Importing the important things to be used-------------#
 import pygame
 import random
 from pygame import mixer
 
 def theme():
-    mixer.init()
-    mixer.music.load("Thoughts on the Road (new ed).wav")
-    mixer.music.play()
-    mixer.music.set_volume(0.7)
+    # initialize
+    pygame.mixer.pre_init()
+    pygame.mixer.init()
+    # start playing the background music
+    pygame.mixer.music.load('Thoughts on the Road (new ed).wav')
+    pygame.mixer.music.set_volume(0.8)
+    pygame.mixer.music.play(loops=-1)
 
-
-theme() #Background music#
+theme() #---------Background music-----#
 
 #-------Display the win screen when a player wins----------#
 def win_screen(player):
@@ -42,7 +42,6 @@ def win_screen(player):
     Ship4 = pygame.image.load('ship4-BIG.png')
     Ship5 = pygame.image.load('ship5-BIG.png')
     Ship6 = pygame.image.load('ship6-BIG.png')
-
     
     #-------Displaying the winning text-----------#
     def display_text():
@@ -118,10 +117,9 @@ def game(size=10):
 
 #----------Music when the ship moves--------#
     def spaceshipSound():
-        mixer.init()
-        mixer.music.load("spaceshipSound.wav")
-        mixer.music.play()
-        mixer.music.set_volume(0.1)
+        sound = pygame.mixer.Sound("spaceshipSound.wav")
+        channel = sound.play()      
+        channel.set_volume(0.08)
 
 #-----Some Queue functions to be used-----------#
     def is_empty(lst): return len(lst) == 0
@@ -208,7 +206,7 @@ def game(size=10):
         #------Key: Number-----Value: (x,y) co-ordinate--------------#
         xx, yy, mm, nn = 0, 10, 19, 9
         a, b = 100, 600
-        for i in range(10):
+        for i in range(size):
             if i % 2 == 0:
                 for j in range(xx, yy):
                     location[numbers[j]] = (a, b)
@@ -268,7 +266,7 @@ def game(size=10):
         #------Key: Number-----Value: (x,y) co-ordinate--------------#
         xx, yy, mm, nn = 0, 15, 29, 14
         a, b = 100, 600
-        for i in range(15):
+        for i in range(size):
             if i % 2 == 0:
                 for j in range(xx, yy):
                     location[numbers[j]] = (a, b)
@@ -293,24 +291,18 @@ def game(size=10):
 #---------Convert a (x,y) cordinate into a number location-----------#
     def num_location(x, y):
         return nums[(x, y)]
-
     #--------The players are initially not moving--------------#
     moving = None
     #------------The previous and future values re initially zero as the dice has not been rolled------------------#
-
     #---------------The co-ordinates for the roll button to be displayed------------#
     roll_x = 750
     roll_y = 550
-
     #-------------The co-ordinates for the dice to be displayed==============#
     dice_x = 750
     dice_y = 80
-
     #-----------This funcation draws the roll button-------------------#
     charterPath = pygame.image.load('rollButton.png')
-
-    def roll_button():
-        screen.blit(charterPath, (roll_x, roll_y))
+    def roll_button(): screen.blit(charterPath, (roll_x, roll_y))
 
     #------------This function decides which picture is to be loaded when a dice is rolled---------------#
     def which_dice(num):
@@ -333,7 +325,7 @@ def game(size=10):
         num = num_location(xx,yy)
         msg = player + ": " + str(num)
         font = pygame.font.Font('freesansbold.ttf', 24)
-        text = font.render(msg, False, (255, 255, 255))
+        text = font.render(msg, True, (255, 255, 255), (0,0,128))
         textRect = text.get_rect()
         textRect.center = (x, y)
         screen.blit(text, textRect)
@@ -359,15 +351,15 @@ def game(size=10):
         display_location(x,y,560,30,"s6")
 
     #------- Function to display helper table--------#
-    key10 = pygame.image.load('key10.png')
-    key15 = pygame.image.load('key15.png')
+    key10,key15 = pygame.image.load('key10.png'),pygame.image.load('key15.png')
 
+    #--------This function displays a table that tells the user about key to Value----------------#
     def dispTable():
         x, y = 975, 100
         if size == 10: screen.blit(key10, (x, y))
         else: screen.blit(key15, (x, y))
-    #----------------This function tells if the player is in a snake location---------#
 
+    #----------------This function tells if the player is in a snake location---------#
     def snaked(location):
         if location in snakes: return snakes[location]
         else: return False
@@ -382,7 +374,7 @@ def game(size=10):
         enQueue(snakeMsg,msg)
         font = pygame.font.Font('freesansbold.ttf', 20)
         pygame.time.wait(500)
-        text = font.render(msg, False, (255, 255, 255))
+        text = font.render(msg, True, (255,255,255), (0,0,128))
         textRect = text.get_rect()
         textRect.center = (900, 30)
         screen.blit(text, textRect)
@@ -393,7 +385,7 @@ def game(size=10):
         font = pygame.font.Font('freesansbold.ttf', 20)
         pygame.time.wait(500)
         font = pygame.font.Font('freesansbold.ttf', 20)
-        text = font.render(msg, False, (255, 255, 255))
+        text = font.render(msg, True, (255,255,255), (0,0,128))
         textRect = text.get_rect()
         textRect.center = (900, 30)
         screen.blit(text, textRect)
@@ -426,21 +418,15 @@ def game(size=10):
 
     #------------This function grids a particular number in a particular x,y co-ordinate-------------#
     def board(x, y, number):
-        if size == 10:
-            pygame.draw.rect(screen, (225, 225, 225), (x, y, 60, 60), 2)
-            font = pygame.font.Font('freesansbold.ttf', 32)
-            text = font.render(str(number), False, (255, 255, 255))
-            textRect = text.get_rect()
-            textRect.center = (x+30, y+30)
-            screen.blit(text, textRect)
-        if size == 15:
-            pygame.draw.rect(screen, (225, 225, 225), (x, y, 40, 40), 2)
-            font = pygame.font.Font('freesansbold.ttf', 15)
-            text = font.render(str(number), False, (255, 255, 255))
-            textRect = text.get_rect()
-            textRect.center = (x+20, y+20)
-            screen.blit(text, textRect)
-
+        if size == 10: radius,font_size = 60,32
+        if size==15: radius, font_size = 40,15
+        A = radius//2
+        pygame.draw.rect(screen, (225, 225, 225), (x, y, radius, radius), 2)
+        font = pygame.font.Font('freesansbold.ttf', font_size)
+        text = font.render(str(number), False, (255, 255, 255))
+        textRect = text.get_rect()
+        textRect.center = (x+A, y+A)
+        screen.blit(text, textRect)
 
     #--------------This function sends all the numbers in the above function------------#
     #--------------In such a way that we get classic snakes and ladder board------------#
@@ -534,7 +520,7 @@ def game(size=10):
             new = dice+old  # -----------Updated Location-----#
             # -----If the player lands on snake------#
             try:
-                if num_location(players[current_player][0], players[current_player][1])>100 :
+                if num_location(players[current_player][0], players[current_player][1])>100 or num_location(players[current_player][0], players[current_player][1])>225:
                     win_screen(current_player)
                     running=False
                 elif new > 0 and moving and not snaked(new) == False:
@@ -580,7 +566,6 @@ def game(size=10):
         # ----updated XY-cordinate of ship6--------#
         ship6_x, ship6_y = players["ship6"][0], players["ship6"][1]
 
-
         whose_turn(ship)
         roll_button()  # ------Display the roll button-------#
         square()
@@ -599,7 +584,6 @@ def game(size=10):
         a1(ast1_x,ast1_y)
         a2(ast2_x,ast2_y)
         pygame.display.update()  # ------Keep updating the display--------#
-
 
 def start():  # ------The Welcome Display-------#
     pygame.init()  # -------Initialize Window------#
@@ -621,7 +605,4 @@ def start():  # ------The Welcome Display-------#
                     game(15)
                     intro = False
         pygame.display.update()
-
-
 start() # -------This starts the game--------
-
