@@ -372,7 +372,6 @@ def game(size=10):
         y = 30
         msg = random.choice(snakeMsg)
         #msg = "Try to steer clear of the Black Holes"
-
         font = pygame.font.Font('freesansbold.ttf', 20)
         text = font.render(msg, False, (255, 255, 255))
         textRect = text.get_rect()
@@ -384,7 +383,6 @@ def game(size=10):
         x = 900
         y = 30
         msg = random.choice(ladderMsg)
-
         #msg = "Congratulation, this portal has transported you forward!"
         font = pygame.font.Font('freesansbold.ttf', 20)
         text = font.render(msg, False, (255, 255, 255))
