@@ -525,7 +525,7 @@ def game(size=10):
                     running=False
                 elif new > 0 and moving and not snaked(new) == False:
                     new = snaked(new)
-                    # spaceshipSound()
+                    spaceshipSound()
                     snake=True
                     XX = xy_location(new)[0]
                     YY = xy_location(new)[1]
@@ -535,7 +535,7 @@ def game(size=10):
                 # ---------If the player lands on ladder-------#
                 elif new > 0 and moving and not laddered(new) == False:
                     new = laddered(new)
-                    # spaceshipSound()
+                    spaceshipSound()
                     ladder=True
                     XX = xy_location(new)[0]
                     YY = xy_location(new)[1]
@@ -545,7 +545,7 @@ def game(size=10):
                 elif new > 0 and moving:  # ---------If neither snake nor ladder----------#
                     XX = xy_location(new)[0]
                     YY = xy_location(new)[1]
-                    # spaceshipSound()
+                    spaceshipSound()
                     # -----Update Location-------#
                     players[current_player] = (XX, YY)
                     moving = False
